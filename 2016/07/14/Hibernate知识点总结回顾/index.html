@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hibernate," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hibernate知识点总结回顾">
+<meta name="keywords" content="hibernate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate知识点总结回顾">
+<meta property="og:url" content="http://yoursite.com/2016/07/14/Hibernate知识点总结回顾/index.html">
+<meta property="og:site_name" content="JCatalina&#39;s Blog">
+<meta property="og:description" content="Hibernate知识点总结回顾">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://imglf4.nosdn.127.net/img/V0xObE1MbG9iQnRnU0ZVN2ZpWlkwa09Pc2ZHckZjU1dpQ1pGTTNORUQ1RkQrS1BZaWttWk13PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2017-12-12T08:29:46.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate知识点总结回顾">
+<meta name="twitter:description" content="Hibernate知识点总结回顾">
+<meta name="twitter:image" content="http://imglf4.nosdn.127.net/img/V0xObE1MbG9iQnRnU0ZVN2ZpWlkwa09Pc2ZHckZjU1dpQ1pGTTNORUQ1RkQrS1BZaWttWk13PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/14/Hibernate知识点总结回顾/"/>
+
+
+
+
+
+  <title>Hibernate知识点总结回顾 | JCatalina's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JCatalina's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Wenjin Luo 's Blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vipvideo">
+          <a href="/vipvideo.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            VIPVideo
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/14/Hibernate知识点总结回顾/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wenjin Luo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JCatalina's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hibernate知识点总结回顾</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-14T08:22:12+08:00">
+                2016-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hibernate/" itemprop="url" rel="index">
+                    <span itemprop="name">hibernate</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Hibernate知识点总结回顾
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="Hibernate知识点总结回顾"><a href="#Hibernate知识点总结回顾" class="headerlink" title="Hibernate知识点总结回顾"></a>Hibernate知识点总结回顾</h1><h1 id="一、Hibernate的5大重要对象以及相关API"><a href="#一、Hibernate的5大重要对象以及相关API" class="headerlink" title="一、Hibernate的5大重要对象以及相关API"></a>一、Hibernate的5大重要对象以及相关API</h1><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>对象</th>
+<th>主要内容</th>
+<th>重要关注点/方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Configuration</td>
+<td>加载配置文件</td>
+<td>负责与数据库连接，生成sessionFactroy</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SessionFactory</td>
+<td>创建/获取session，二级缓存存储的地方</td>
+<td>getCurrentSession()/openSession()</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Session</td>
+<td>负责与数据库交互CRUD的API对象</td>
+<td>get()/load()的区别;sava/persist区别;saveOrUpate/merge区别</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transaction</td>
+<td>事务对象</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Query</td>
+<td>封装查询的API对象</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Criteria</td>
+<td>更加面向对象的查询方式API对象</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="二、持久化对象的生命周期"><a href="#二、持久化对象的生命周期" class="headerlink" title="二、持久化对象的生命周期"></a>二、持久化对象的生命周期</h1><h3 id="生命周期的判断依据"><a href="#生命周期的判断依据" class="headerlink" title="生命周期的判断依据"></a>生命周期的判断依据</h3><ol>
+<li>是否有OID</li>
+<li>是否被session管理</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>临时状态/瞬时态(transient)</td>
+<td>刚刚用new语句创建，没有被持久化，不处于session中</td>
+<td>没有oid,不在session当中</td>
+</tr>
+<tr>
+<td>持久化状态(persistent)</td>
+<td>已经被持久化，加入到session的缓存中。</td>
+<td>有oid,在session当中</td>
+</tr>
+<tr>
+<td>脱管态/游离状态(detached)</td>
+<td>已经被持久化，但不处于session中。</td>
+<td>有oid,不在session当中</td>
+</tr>
+<tr>
+<td>删除状态(removed)</td>
+<td>对象有关联的ID，并且在Session管理下，但是已经计划被删除。</td>
+<td>有oid,在session当中,最终的效果是被删除</td>
+</tr>
+</tbody>
+</table>
+<p>附件：对象转换图<br><img src="http://imglf4.nosdn.127.net/img/V0xObE1MbG9iQnRnU0ZVN2ZpWlkwa09Pc2ZHckZjU1dpQ1pGTTNORUQ1RkQrS1BZaWttWk13PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="link"></p>
+<p><strong>session负责改变状态,事务负责同步数据.</strong></p>
+<hr>
+<h1 id="三、对象的关系映射"><a href="#三、对象的关系映射" class="headerlink" title="三、对象的关系映射"></a>三、对象的关系映射</h1><h4 id="3-1-对象的关系分类："><a href="#3-1-对象的关系分类：" class="headerlink" title="3.1 对象的关系分类："></a>3.1 对象的关系分类：</h4><pre><code>1. 依赖关系
+2. **关联关系**
+3. 聚合关系
+4. **组合关系**
+5. 泛化关系
+</code></pre><p><strong>理解：定义这些关系的目的是为了减少代码，减少重复编写(引用即可)</strong></p>
+<h4 id="3-2-关联关系映射"><a href="#3-2-关联关系映射" class="headerlink" title="3.2 关联关系映射"></a>3.2 关联关系映射</h4><h5 id="3-2-1-单向关联"><a href="#3-2-1-单向关联" class="headerlink" title="3.2.1 单向关联"></a>3.2.1 单向关联</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">多对一：</span><br><span class="line">        分析get方法:</span><br><span class="line">    		1. many方获取one方的时候,使用了延迟加载.</span><br><span class="line">    	 	2. 可以使用if-null方式来判断,是否存在one方.</span><br><span class="line">    	 	3. 得到的one方,必须在session关闭之前实例化(获取),否则报错:no session.</span><br><span class="line">        分析save方法:</span><br><span class="line">		    先保存many方再保存one方,会产生额外的SQL,这些SQL是由于持久化对象(many)的脏数据造成的;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">一对多：</span><br><span class="line">        get方法:</span><br><span class="line">            1:通过one方获取many方,使用了延迟加载.</span><br><span class="line">            2:one方的many方的属性是一个集合,必须使用接口来声明.</span><br><span class="line">            3:不能通过if-null来判断one方是否有many方,只能通过size方法来判断.</span><br><span class="line">            4:必须在session关闭之前使用集合对象,否则报错:no session.</span><br><span class="line">        save方法:</span><br><span class="line">            由Department来维护外键关系,所以得发额外的两条SQL:</span><br><span class="line">            在保存对象的时候,因为对象的关系由one方维护,所以,在保存many方的时候,不会去修改外键的值;</span><br><span class="line">            只能在one方保存完成之后,由one方发送额外的update语句去修改many方的外键的值;</span><br></pre></td></tr></table></figure>
+<p><strong>小结：</strong></p>
+<ol>
+<li>看关系配置在哪一方，该方就负责维护关系。</li>
+<li>不要轻易认为代码上employee.setDep(xxx)就建立了关系，(1)假如部门没保存，其OID是不确定的(取决于主键的生成策略)，所以关系仍然没在数据库中建立。(2)还需要实体的保存顺序</li>
+<li>默认都使用延迟加载，many可以采用if-null判断是因为拥有外键</li>
+</ol>
+<h5 id="3-2-2-双向关联"><a href="#3-2-2-双向关联" class="headerlink" title="3.2.2 双向关联"></a>3.2.2 双向关联</h5><p><strong>重点：inverse=true设置在one放提高性能</strong></p>
+<p><strong>总结:</strong></p>
+<ol>
+<li>在映射一对多的双向关联关系时,应该在one方把<set>/<list>/<bag>元素的inverse属性设置为true,提高性能.</bag></list></set></li>
+<li>在建立两个对象的双向关联时,应该同时修改两端对象的相应属性:<br><code>dept.getEmps().add(emp);</code><br><code>emp.setDept(dept);</code></li>
+<li>当删除双向关联的关系时,也应该修改两端对象的相应属性:<br><code>dept.getEmps().remove(emp);</code><br><code>emp.setDept(null);</code></li>
+</ol>
+<hr>
+<h1 id="四、Hibernate的事务管理"><a href="#四、Hibernate的事务管理" class="headerlink" title="四、Hibernate的事务管理"></a>四、Hibernate的事务管理</h1><ul>
+<li><a href="http://note.youdao.com/noteshare?id=c801df7e5875adb1081b44cbfdaff5a6&amp;sub=0A5A5D09861F460490B685F571BC49DC" target="_blank" rel="noopener">事务的回顾</a></li>
+<li><p>悲观锁：get/load/query 设置LockOption</p>
+</li>
+<li><p>乐观锁：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在hibernate中使用乐观锁，推荐使用version方式；</span><br><span class="line">1，给对象添加一个int version字段，最好设置属性为private；</span><br><span class="line">2，在mapping文件中添加&lt;version&gt;元素即可；</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h1 id="五、Hibernate的缓存"><a href="#五、Hibernate的缓存" class="headerlink" title="五、Hibernate的缓存"></a>五、Hibernate的缓存</h1><h4 id="1-一级缓存：session级别缓存"><a href="#1-一级缓存：session级别缓存" class="headerlink" title="1. 一级缓存：session级别缓存"></a>1. 一级缓存：session级别缓存</h4><h4 id="2-二级缓存：应用application级别的缓存-意思就是应用重启之后才失效-gt-栗子：Tomcat重启失效-，借助于第三方框架的缓存-EHACHE"><a href="#2-二级缓存：应用application级别的缓存-意思就是应用重启之后才失效-gt-栗子：Tomcat重启失效-，借助于第三方框架的缓存-EHACHE" class="headerlink" title="2. 二级缓存：应用application级别的缓存(意思就是应用重启之后才失效-&gt;栗子：Tomcat重启失效)，借助于第三方框架的缓存(EHACHE)"></a>2. 二级缓存：应用application级别的缓存(意思就是应用重启之后才失效-&gt;栗子：Tomcat重启失效)，借助于第三方框架的缓存(EHACHE)</h4><hr>
+<h1 id="六、OpenSessionInView"><a href="#六、OpenSessionInView" class="headerlink" title="六、OpenSessionInView"></a>六、OpenSessionInView</h1><p>通过过滤器处理，把session绑定在请求中，最后结束时才关闭session。<br>之前session的关闭是在事务提交后，现在延迟到请求结束后一步。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doFilterInternal</span><span class="params">(HttpServletRequest request,HttpServletResponse response,FilterChain filterChain)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    　SessionFactory sessionFactory = lookupSessionFactory();</span><br><span class="line">    </span><br><span class="line">    　logger.debug(<span class="string">"Opening Hibernate Session in OpenSessionInViewFilter"</span>);</span><br><span class="line">    </span><br><span class="line">    　Session session = getSession(sessionFactory);</span><br><span class="line">    </span><br><span class="line">    　TransactionSynchronizationManager.bindResource(sessionFactory, <span class="keyword">new</span> SessionHolder(session));</span><br><span class="line"></span><br><span class="line">    　<span class="keyword">try</span> &#123;</span><br><span class="line">    　      　filterChain.doFilter(request, response);</span><br><span class="line">    　&#125;</span><br><span class="line">    </span><br><span class="line">    　<span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">        　TransactionSynchronizationManager.unbindResource(sessionFactory);</span><br><span class="line">      </span><br><span class="line">        　logger.debug(<span class="string">"Closing Hibernate Session in OpenSessionInViewFilter"</span>);</span><br><span class="line">            </span><br><span class="line">        　closeSession(session, sessionFactory);</span><br><span class="line">　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hibernate/" rel="tag"># hibernate</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/13/SQL_Review/" rel="next" title="SQL_Review">
+                <i class="fa fa-chevron-left"></i> SQL_Review
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/15/Spring AOP的动态代理/" rel="prev" title="Spring的动态代理过渡到AOP">
+                Spring的动态代理过渡到AOP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wenjin Luo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate知识点总结回顾"><span class="nav-number">1.</span> <span class="nav-text">Hibernate知识点总结回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Hibernate的5大重要对象以及相关API"><span class="nav-number">2.</span> <span class="nav-text">一、Hibernate的5大重要对象以及相关API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、持久化对象的生命周期"><span class="nav-number">3.</span> <span class="nav-text">二、持久化对象的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期的判断依据"><span class="nav-number">3.0.1.</span> <span class="nav-text">生命周期的判断依据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、对象的关系映射"><span class="nav-number">4.</span> <span class="nav-text">三、对象的关系映射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-对象的关系分类："><span class="nav-number">4.0.0.1.</span> <span class="nav-text">3.1 对象的关系分类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-关联关系映射"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">3.2 关联关系映射</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-1-单向关联"><span class="nav-number">4.0.0.2.1.</span> <span class="nav-text">3.2.1 单向关联</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-双向关联"><span class="nav-number">4.0.0.2.2.</span> <span class="nav-text">3.2.2 双向关联</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Hibernate的事务管理"><span class="nav-number">5.</span> <span class="nav-text">四、Hibernate的事务管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Hibernate的缓存"><span class="nav-number">6.</span> <span class="nav-text">五、Hibernate的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-一级缓存：session级别缓存"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">1. 一级缓存：session级别缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-二级缓存：应用application级别的缓存-意思就是应用重启之后才失效-gt-栗子：Tomcat重启失效-，借助于第三方框架的缓存-EHACHE"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">2. 二级缓存：应用application级别的缓存(意思就是应用重启之后才失效->栗子：Tomcat重启失效)，借助于第三方框架的缓存(EHACHE)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、OpenSessionInView"><span class="nav-number">7.</span> <span class="nav-text">六、OpenSessionInView</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wenjin Luo</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+	  <div class="footer-inner">
+		<embed src="//music.163.com/style/swf/widget.swf?sid=28784401&type=2&auto=0&width=278&height=32" width="298" height="52"  allowNetworking="all"></embed>
+	  </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
