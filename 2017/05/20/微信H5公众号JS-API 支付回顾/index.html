@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="微信," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="微信支付">
+<meta name="keywords" content="微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信H5公众号JS-API 支付回顾">
+<meta property="og:url" content="http://yoursite.com/2017/05/20/微信H5公众号JS-API 支付回顾/index.html">
+<meta property="og:site_name" content="JCatalina&#39;s Blog">
+<meta property="og:description" content="微信支付">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://pay.weixin.qq.com/wiki/doc/api/img/chapter7_4_1.png">
+<meta property="og:updated_time" content="2017-12-23T02:40:28.191Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信H5公众号JS-API 支付回顾">
+<meta name="twitter:description" content="微信支付">
+<meta name="twitter:image" content="https://pay.weixin.qq.com/wiki/doc/api/img/chapter7_4_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/20/微信H5公众号JS-API 支付回顾/"/>
+
+
+
+
+
+  <title>微信H5公众号JS-API 支付回顾 | JCatalina's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JCatalina's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">纸上得来终觉浅 绝知此事要躬行</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vip视频解析">
+          <a href="/vipvideo.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            VIP视频解析
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/20/微信H5公众号JS-API 支付回顾/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wenjin Luo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JCatalina's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信H5公众号JS-API 支付回顾</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-20T20:46:25+08:00">
+                2017-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/微信/" itemprop="url" rel="index">
+                    <span itemprop="name">微信</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  微信支付
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="微信H5公众号JS-API-支付回顾"><a href="#微信H5公众号JS-API-支付回顾" class="headerlink" title="微信H5公众号JS-API 支付回顾"></a>微信H5公众号JS-API 支付回顾</h1><h2 id="1-文档参考："><a href="#1-文档参考：" class="headerlink" title="1. 文档参考："></a>1. 文档参考：</h2><ul>
+<li><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6" target="_blank" rel="noopener">官方文档</a></li>
+<li><p><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=11_1" target="_blank" rel="noopener">官方demo</a></p>
+</li>
+<li><p>注意点：</p>
+<ul>
+<li>由于官方全白背景，文字毫无重点，让人很难发现多个api，支付方式间的区别。需要很仔细查看描述。(如：app支付参数必传，jsapi支付必传)</li>
+<li><strong>++本次JSAPI支付注意点就是调用统一下单接口时，用户的openid必传++</strong>。扫码或者长按二维码非必须。<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1" target="_blank" rel="noopener">link</a></li>
+<li><strong>微信支付H5发起只能</strong>在微信浏览器中，京东的网页是腾讯开后门的。生成二维码扫码支付没限制</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-微信支付流程图"><a href="#2-微信支付流程图" class="headerlink" title="2. 微信支付流程图"></a>2. 微信支付流程图</h2><ul>
+<li><strong>我们要开发的实际上是 4-9 的步骤。</strong></li>
+</ul>
+<p><img src="https://pay.weixin.qq.com/wiki/doc/api/img/chapter7_4_1.png" alt=""></p>
+<h2 id="3-步骤开发"><a href="#3-步骤开发" class="headerlink" title="3. 步骤开发"></a>3. 步骤开发</h2><h3 id="一-总体发起支付步骤JS页面代码"><a href="#一-总体发起支付步骤JS页面代码" class="headerlink" title="(一)总体发起支付步骤JS页面代码"></a>(一)总体发起支付步骤JS页面代码</h3><ol>
+<li>判断是否是UserAgent是否是微信浏览器</li>
+<li>是微信浏览器，通过post请求我们服务器向微信服务器下单。</li>
+<li>下单成功后，post请求成功返回JSAPI调用微信支付的参数config，并配置在页面JS。</li>
+<li>调用callPay,微信浏览器发起支付-&gt;用户输入密码。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>( UA.isWX &amp;&amp; $(<span class="string">"#pt3"</span>).is(<span class="string">':checked'</span>))&#123; </span><br><span class="line">		<span class="comment">//微信支付 js-api</span></span><br><span class="line">		<span class="comment">// weixinPay/jsApiPay/wxPay!ajaxGetPayInfo?orderNo=DP000076170327372714&amp;orderNoType=1</span></span><br><span class="line">		<span class="keyword">var</span> orderNo=$(<span class="string">"#orderNo"</span>).val();</span><br><span class="line">		<span class="keyword">var</span> orderNoType=$(<span class="string">"#orderNoType"</span>).val();</span><br><span class="line">		$.post(</span><br><span class="line">			<span class="string">"weixinPay/jsApiPay/wxPay!testAjaxGetPayInfo.action"</span>,</span><br><span class="line">			&#123;<span class="attr">orderNo</span>:orderNo,<span class="attr">orderNoType</span>:orderNoType&#125;,</span><br><span class="line">			<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">				<span class="built_in">console</span>.log(data);</span><br><span class="line">				<span class="keyword">if</span>(data.status==<span class="string">"suc"</span>)&#123;</span><br><span class="line">				    <span class="keyword">var</span> config=data.config;</span><br><span class="line">					<span class="built_in">console</span>.log(config);</span><br><span class="line">					callPay(config);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			    	alert(<span class="built_in">JSON</span>.stringify(data.errMsg));</span><br><span class="line">					Toast.alert(<span class="string">'微信下单支付失败'</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="string">"json"</span></span><br><span class="line">		);</span><br><span class="line">		&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( <span class="regexp">/orderinfo/</span>.test(url) )&#123;</span><br><span class="line">			$(<span class="string">'#orderinfo'</span>).submit();</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			location.href = url;</span><br><span class="line">			&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="二-对应流程图具体开发代码"><a href="#二-对应流程图具体开发代码" class="headerlink" title="(二)对应流程图具体开发代码"></a>(二)对应流程图具体开发代码</h3><h4 id="1-流程图第五步：调用同一下单接口，返回微信服务器的预付单号prepay-id和一些数据"><a href="#1-流程图第五步：调用同一下单接口，返回微信服务器的预付单号prepay-id和一些数据" class="headerlink" title="1. 流程图第五步：调用同一下单接口，返回微信服务器的预付单号prepay_id和一些数据"></a>1. 流程图第五步：调用同一下单接口，返回微信服务器的预付单号prepay_id和一些数据</h4><p><strong>注意点：jsapi下单必须传用户的openid</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * JSAPI下单</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> out_trade_no</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> total_fee</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> notify_url 钱包充值使用的通知地址，正常订单此变量为null</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@attach</span> 商家附带信息 "NO00001,100.0|No00002,99"</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">jsapiOrder</span><span class="params">(String out_trade_no,</span></span></span><br><span class="line"><span class="function"><span class="params">			String total_fee, String openid, String attach, String notify_url)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String url = <span class="string">""</span>;</span><br><span class="line">		<span class="keyword">if</span> (!SimpleToof.checkNotNull(notify_url)) &#123;</span><br><span class="line">			url = NOTIFY_URL;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			url = notify_url;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 创建查询请求对象</span></span><br><span class="line">		RequestHandler reqHandler = <span class="keyword">new</span> RequestHandler(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">		<span class="comment">// 通信对象</span></span><br><span class="line">		TenpayHttpClient httpClient = <span class="keyword">new</span> TenpayHttpClient();</span><br><span class="line">		<span class="comment">// 应答对象</span></span><br><span class="line">		ClientResponseHandler resHandler = <span class="keyword">new</span> ClientResponseHandler();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// -----------------------------</span></span><br><span class="line">		<span class="comment">// 设置请求参数</span></span><br><span class="line">		<span class="comment">// -----------------------------</span></span><br><span class="line">		reqHandler.setKey(KEY);</span><br><span class="line">		reqHandler.setGateUrl(FIRST_ORDER_URL);<span class="comment">// 请求URL</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// -----------------------------</span></span><br><span class="line">		<span class="comment">// 设置接口参数(sign后台自动生成)</span></span><br><span class="line">		<span class="comment">// -----------------------------</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"appid"</span>, APPID); <span class="comment">// 公众号</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"mch_id"</span>, PARTNER); <span class="comment">// 商户号</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"nonce_str"</span>, SimpleToof.getUUIDName()</span><br><span class="line">				.substring(<span class="number">0</span>, <span class="number">30</span>));<span class="comment">// 随机乱码</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"body"</span>, out_trade_no);<span class="comment">// 商品描述</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"out_trade_no"</span>, out_trade_no);<span class="comment">// 商户订单号</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"total_fee"</span>, total_fee);<span class="comment">// 总金额</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"spbill_create_ip"</span>, <span class="string">"8.8.8.8"</span>);<span class="comment">// 终端IP</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"notify_url"</span>, url);<span class="comment">// 通知地址</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"trade_type"</span>, <span class="string">"JSAPI"</span>);<span class="comment">// 交易类型 JSAPI，NATIVE，APP</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"openid"</span>, openid);<span class="comment">// openId</span></span><br><span class="line">		reqHandler.setParameter(<span class="string">"attach"</span>, attach);<span class="comment">// 附带数据包</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// -----------------------------</span></span><br><span class="line">		<span class="comment">// 设置通信参数</span></span><br><span class="line">		<span class="comment">// -----------------------------</span></span><br><span class="line">		<span class="comment">// 设置请求返回的等待时间</span></span><br><span class="line">		httpClient.setTimeOut(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 设置发送类型POST</span></span><br><span class="line">		httpClient.setMethod(<span class="string">"POST"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 设置请求内容(生成sign)</span></span><br><span class="line">		String requestUrl = reqHandler.getRequestURL();<span class="comment">// 组拼https://www.baidu.com?a=x&amp;b=xx</span></span><br><span class="line"></span><br><span class="line">		httpClient.setReqContent(requestUrl);<span class="comment">// https://www.baidu.com?a=x&amp;b=xx</span></span><br><span class="line">		String rescontent = <span class="string">"null"</span>;</span><br><span class="line"></span><br><span class="line">		httpClient.setRequestHandler(reqHandler);<span class="comment">// 把处理对象，像是参数各种东西都设置进去方便获取(quan)</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 返回出去的对象(状态，错误原因，该操作相关信息(参数,返回值))</span></span><br><span class="line">		JSONObject returnObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 后台调用</span></span><br><span class="line">		<span class="keyword">if</span> (httpClient.call()) &#123;</span><br><span class="line">			System.out.println(<span class="string">"统一下单,成功cll了::"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 设置结果参数</span></span><br><span class="line">			rescontent = httpClient.getResContent();</span><br><span class="line">			System.out.println(<span class="string">"统一下单返回结果:"</span> + rescontent);</span><br><span class="line">			resHandler.setContent(rescontent);<span class="comment">// 解析xml</span></span><br><span class="line">			resHandler.setKey(KEY);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 获取返回参数</span></span><br><span class="line">			String return_code = resHandler.getParameter(<span class="string">"return_code"</span>);</span><br><span class="line">			String return_msg = resHandler.getParameter(<span class="string">"return_msg"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 判断签名及结果</span></span><br><span class="line">			<span class="keyword">if</span> (resHandler.isTenpaySign() &amp;&amp; <span class="string">"SUCCESS"</span>.equals(return_code)) &#123;</span><br><span class="line">				String prepay_id = resHandler.getParameter(<span class="string">"prepay_id"</span>);<span class="comment">// 预支付交易会话标识</span></span><br><span class="line">				String code_url = resHandler.getParameter(<span class="string">"code_url"</span>);<span class="comment">// 二维码链接</span></span><br><span class="line"></span><br><span class="line">				String result_code = resHandler.getParameter(<span class="string">"result_code"</span>);<span class="comment">// 业务结果</span></span><br><span class="line">				String appid = resHandler.getParameter(<span class="string">"appid"</span>);<span class="comment">// 公众账号ID</span></span><br><span class="line">				String mch_id = resHandler.getParameter(<span class="string">"mch_id"</span>);<span class="comment">// 商户号</span></span><br><span class="line">				String nonce_str = resHandler.getParameter(<span class="string">"nonce_str"</span>);<span class="comment">// 随机码</span></span><br><span class="line">				String sign = resHandler.getParameter(<span class="string">"sign"</span>);<span class="comment">// 签名</span></span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (result_code.equals(<span class="string">"SUCCESS"</span>)) &#123;</span><br><span class="line">					returnObj.put(<span class="string">"status"</span>, <span class="string">"suc"</span>);</span><br><span class="line">					returnObj.put(<span class="string">"sign"</span>, sign);</span><br><span class="line">					returnObj.put(<span class="string">"nonce_str"</span>, nonce_str);</span><br><span class="line">					returnObj.put(<span class="string">"mch_id"</span>, mch_id);</span><br><span class="line">					returnObj.put(<span class="string">"appid"</span>, appid);</span><br><span class="line">					returnObj.put(<span class="string">"prepay_id"</span>, prepay_id);</span><br><span class="line">					returnObj.put(<span class="string">"code_url"</span>, code_url);</span><br><span class="line">					returnObj.put(<span class="string">"out_trade_no"</span>, out_trade_no);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					String errMsg = <span class="string">"[ERROR]result_code:"</span></span><br><span class="line">							+ resHandler.getParameter(<span class="string">"result_code"</span>)</span><br><span class="line">							+ <span class="string">" err_code:"</span></span><br><span class="line">							+ resHandler.getParameter(<span class="string">"err_code"</span>)</span><br><span class="line">							+ <span class="string">"err_code_des:"</span></span><br><span class="line">							+ resHandler.getParameter(<span class="string">"err_code_des"</span>);</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 错误时，返回结果未签名，记录retcode、retmsg看失败详情。</span></span><br><span class="line">					returnObj.put(<span class="string">"status"</span>, <span class="string">"ERROR-C"</span>);</span><br><span class="line">					returnObj.put(<span class="string">"errMsg"</span>, errMsg);</span><br><span class="line">					<span class="comment">//System.out.println("验证签名失败或业务错误1：" + errMsg);</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				String errMsg = <span class="string">"return_code:"</span> + return_code + <span class="string">"err_code:"</span></span><br><span class="line">						+ resHandler.getParameter(<span class="string">"err_code"</span>) + <span class="string">" return_msg:"</span></span><br><span class="line">						+ return_msg;</span><br><span class="line">				<span class="comment">// 错误时，返回结果未签名，记录retcode、retmsg看失败详情。</span></span><br><span class="line">				returnObj.put(<span class="string">"status"</span>, <span class="string">"ERROR-B"</span>);</span><br><span class="line">				returnObj.put(<span class="string">"errMsg"</span>, errMsg);</span><br><span class="line">				<span class="comment">//System.out.println("验证签名失败或业务错误2：" + errMsg);</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// 有可能因为网络原因，请求已经处理，但未收到应答。</span></span><br><span class="line">			returnObj.put(<span class="string">"status"</span>, <span class="string">"ERROR-A"</span>);</span><br><span class="line">			returnObj.put(<span class="string">"errMsg"</span>, httpClient.getResponseCode() + <span class="string">":"</span></span><br><span class="line">					+ httpClient.getErrInfo());</span><br><span class="line">			<span class="comment">//System.out.println("通讯失败：" + httpClient.getResponseCode() + ":"</span></span><br><span class="line">			<span class="comment">//		+ httpClient.getErrInfo());</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 获取debug信息,建议把请求、应答内容、debug信息，通信返回码写入日志，方便定位问题</span></span><br><span class="line">		String detail = <span class="string">"http res:"</span> + httpClient.getResponseCode() + <span class="string">","</span></span><br><span class="line">				+ httpClient.getErrInfo() + <span class="string">";"</span> + <span class="string">"req url:"</span> + requestUrl + <span class="string">";"</span></span><br><span class="line">				+ <span class="string">";"</span> + <span class="string">"req debug:"</span> + reqHandler.getDebugInfo() + <span class="string">";"</span></span><br><span class="line">				+ <span class="string">"res content:"</span> + rescontent + <span class="string">";"</span> + <span class="string">"res debug:"</span></span><br><span class="line">				+ resHandler.getDebugInfo() + <span class="string">";"</span>;</span><br><span class="line"></span><br><span class="line">		returnObj.put(<span class="string">"detail"</span>, detail);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> returnObj;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-流程图第六步：根据下单接口返回的数据，生成JSAPI页面调用支付的参数和签名，并返回给H5页面。"><a href="#2-流程图第六步：根据下单接口返回的数据，生成JSAPI页面调用支付的参数和签名，并返回给H5页面。" class="headerlink" title="2. 流程图第六步：根据下单接口返回的数据，生成JSAPI页面调用支付的参数和签名，并返回给H5页面。"></a>2. 流程图第六步：根据下单接口返回的数据，生成JSAPI页面调用支付的参数和签名，并返回给H5页面。</h4><p><strong>注意点：返回的参数看文档:</strong><a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6" target="_blank" rel="noopener">链接</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 统一下单api</span></span><br><span class="line">	org.json.JSONObject wxObj = WXRefundUtil.jsapiOrder(getWeChatPayOrderNo(orderNo),wxPayMoney.toString(), (String)session.getAttribute(Constants.Common.SESSION_WX_OPENID), body, notify_url);</span><br><span class="line"></span><br><span class="line">	String status = wxObj.getString(<span class="string">"status"</span>);</span><br><span class="line">	<span class="keyword">if</span> (status.equals(<span class="string">"suc"</span>)) &#123;</span><br><span class="line"></span><br><span class="line">		JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line"></span><br><span class="line">		appId = wxObj.getString(<span class="string">"appid"</span>);</span><br><span class="line">		nonceStr = wxObj.getString(<span class="string">"nonce_str"</span>);</span><br><span class="line">		prepay_id = wxObj.getString(<span class="string">"prepay_id"</span>);</span><br><span class="line">		String code_url = wxObj.getString(<span class="string">"code_url"</span>);<span class="comment">// 二维码链接</span></span><br><span class="line"></span><br><span class="line">		obj.put(<span class="string">"code_url"</span>, base64ImgCode);<span class="comment">// 二维码的图片base64码</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//这些是JSAPI调用支付返回的数据 </span></span><br><span class="line">		timeStamp = DateToTimestamp(<span class="keyword">new</span> Date()).toString(); </span><br><span class="line">		String signType = <span class="string">"MD5"</span>; </span><br><span class="line">		String packagef =<span class="string">"prepay_id="</span>+prepay_id; </span><br><span class="line">		paySign = wxObj.getString(<span class="string">"sign"</span>);</span><br><span class="line">		RequestHandler reqHandler = <span class="keyword">new</span> RequestHandler(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">		reqHandler.setParameter(<span class="string">"appId"</span>, appId);</span><br><span class="line">		reqHandler.setParameter(<span class="string">"nonceStr"</span>, nonceStr);</span><br><span class="line">		reqHandler.setParameter(<span class="string">"timeStamp"</span>, timeStamp);</span><br><span class="line">		reqHandler.setParameter(<span class="string">"package"</span>, packagef);</span><br><span class="line">		reqHandler.setParameter(<span class="string">"signType"</span>, signType);</span><br><span class="line">		reqHandler.setKey(WXRefundUtil.KEY);</span><br><span class="line">		</span><br><span class="line">		paySign = reqHandler.createSign();<span class="comment">//生成签名</span></span><br><span class="line">		</span><br><span class="line">		obj.put(<span class="string">"paySign"</span>, paySign); </span><br><span class="line">		obj.put(<span class="string">"appId"</span>, appId);</span><br><span class="line">		obj.put(<span class="string">"nonceStr"</span>, nonceStr);</span><br><span class="line">		obj.put(<span class="string">"package"</span>, packagef);</span><br><span class="line">		obj.put(<span class="string">"signType"</span>, signType); </span><br><span class="line">		obj.put(<span class="string">"timeStamp"</span>, timeStamp);</span><br><span class="line"></span><br><span class="line">		reObj.put(<span class="string">"status"</span>, <span class="string">"suc"</span>);</span><br><span class="line">		reObj.put(<span class="string">"config"</span>, obj);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		errorMsg = wxObj.getString(<span class="string">"errMsg"</span>);</span><br><span class="line">		reObj.put(<span class="string">"status"</span>, <span class="string">"err"</span>);</span><br><span class="line">		reObj.put(<span class="string">"errMsg"</span>, errorMsg);</span><br><span class="line">	&#125;</span><br><span class="line">	WebUtil.AJAXMsg(reObj.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-流程图第七步：用户所在的H5页面发起支付，JSAPI请求支付"><a href="#3-流程图第七步：用户所在的H5页面发起支付，JSAPI请求支付" class="headerlink" title="3.流程图第七步：用户所在的H5页面发起支付，JSAPI请求支付"></a>3.流程图第七步：用户所在的H5页面发起支付，JSAPI请求支付</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onBridgeReady</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">	WeixinJSBridge.invoke(<span class="string">'getBrandWCPayRequest'</span>, &#123;</span><br><span class="line">		<span class="string">"appId"</span> : config.appId, <span class="comment">// 公众号名称，由商户传入</span></span><br><span class="line">		<span class="string">"timeStamp"</span> : config.timeStamp, <span class="comment">// 时间戳，自1970年以来的秒数</span></span><br><span class="line">		<span class="string">"nonceStr"</span> : config.nonceStr , <span class="comment">// 随机串</span></span><br><span class="line">		<span class="string">"package"</span> : config.package,</span><br><span class="line">		<span class="string">"signType"</span> : config.signType, <span class="comment">// 微信签名方式：</span></span><br><span class="line">		<span class="string">"paySign"</span> :  config.paySign<span class="comment">// 微信签名</span></span><br><span class="line">	&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (res.err_msg == <span class="string">"get_brand_wcpay_request:ok"</span>) &#123;</span><br><span class="line">			Toast.alert(<span class="string">'微信支付成功'</span>);</span><br><span class="line">			location.href = <span class="string">"pay/pay!paySUC_PHONE.action?orderNo="</span>+orderNo;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>(res.err_msg == <span class="string">"get_brand_wcpay_request:cancel"</span>)&#123;</span><br><span class="line">			alert(<span class="built_in">JSON</span>.stringify(res));</span><br><span class="line">			Toast.alert(<span class="string">'用户取消支付'</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			Toast.alert(<span class="string">'调用微信支付失败'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callPay</span>(<span class="params">config</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">typeof</span> WeixinJSBridge == <span class="string">"undefined"</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">document</span>.addEventListener) &#123;</span><br><span class="line">			<span class="built_in">document</span>.addEventListener(<span class="string">'WeixinJSBridgeReady'</span>, onBridgeReady, <span class="literal">false</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">document</span>.attachEvent) &#123;</span><br><span class="line">			<span class="built_in">document</span>.attachEvent(<span class="string">'WeixinJSBridgeReady'</span>, onBridgeReady);</span><br><span class="line">			<span class="built_in">document</span>.attachEvent(<span class="string">'onWeixinJSBridgeReady'</span>, onBridgeReady);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		onBridgeReady(config);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="4-过程中遇到的问题"><a href="#4-过程中遇到的问题" class="headerlink" title="4. 过程中遇到的问题"></a>4. 过程中遇到的问题</h3><ul>
+<li>问题1. 用户唤醒了支付，想着跟商家再交流下价格，然后取消了支付，后来价格改了之后重新发起支付，但是下单失败。</li>
+<li>分析：因为微信下单之后，微信服务器已经保存了++订单号和价格++，加入此时你重新下单同样的订单号，但是价格不一样了，微信是不能下单成功的。因此</li>
+<li>解决：下单的时候，发送给微信服务器的++订单号=我们系统订单号+”<em>时间戳”++，这样可以避免下单失败，然后微信回调通知我们支付成功时，返回的订单号也是++订单号=我们系统订单号+”</em>时间戳”++我们系统在++提取系统订单号++做逻辑即可.</li>
+</ul>
+<hr>
+<ul>
+<li>问题2. 微信支付如何测试</li>
+<li>解决：</li>
+</ul>
+<ol>
+<li>在微信公众号内增加配置测试支付的授权目录为测试服的域名</li>
+<li>把自己生成在正式公众号的微信的openid写死在下单函数里面测试。(因为微信公众号绑定了微信商家，微信支付要求发起支付的用户的openid一定是要与之关联的微信公众号下的openid)。<ul>
+<li>走过的弯路：在测试服时，虽然微信商家那里配置了测试服的支付授权域名，但是下单时采用的是测试公众号下的微信用户openid，所以下单不成功。</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-过程中额外的收获知识点。"><a href="#5-过程中额外的收获知识点。" class="headerlink" title="5.过程中额外的收获知识点。"></a>5.过程中额外的收获知识点。</h3><ul>
+<li>关于证书，签名和签名算法，是大学密码学的学的内容。</li>
+<li>非对称加密的两个应用：加密和数字签名。</li>
+<li>微信大概就是用这些方法来防止其他服务器代理发送假的支付消息等等安全问题。</li>
+</ul>
+<blockquote>
+<p><a href="http://blog.sina.com.cn/s/blog_48422a050102w364.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_48422a050102w364.html</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/14/数据库的事务隔离级别和事务的并发访问/" rel="next" title="数据库的事务隔离级别和事务的并发访问">
+                <i class="fa fa-chevron-left"></i> 数据库的事务隔离级别和事务的并发访问
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wenjin Luo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微信H5公众号JS-API-支付回顾"><span class="nav-number">1.</span> <span class="nav-text">微信H5公众号JS-API 支付回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-文档参考："><span class="nav-number">1.1.</span> <span class="nav-text">1. 文档参考：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-微信支付流程图"><span class="nav-number">1.2.</span> <span class="nav-text">2. 微信支付流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-步骤开发"><span class="nav-number">1.3.</span> <span class="nav-text">3. 步骤开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-总体发起支付步骤JS页面代码"><span class="nav-number">1.3.1.</span> <span class="nav-text">(一)总体发起支付步骤JS页面代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-对应流程图具体开发代码"><span class="nav-number">1.3.2.</span> <span class="nav-text">(二)对应流程图具体开发代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-流程图第五步：调用同一下单接口，返回微信服务器的预付单号prepay-id和一些数据"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">1. 流程图第五步：调用同一下单接口，返回微信服务器的预付单号prepay_id和一些数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-流程图第六步：根据下单接口返回的数据，生成JSAPI页面调用支付的参数和签名，并返回给H5页面。"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">2. 流程图第六步：根据下单接口返回的数据，生成JSAPI页面调用支付的参数和签名，并返回给H5页面。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-流程图第七步：用户所在的H5页面发起支付，JSAPI请求支付"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">3.流程图第七步：用户所在的H5页面发起支付，JSAPI请求支付</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-过程中遇到的问题"><span class="nav-number">1.3.3.</span> <span class="nav-text">4. 过程中遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-过程中额外的收获知识点。"><span class="nav-number">1.3.4.</span> <span class="nav-text">5.过程中额外的收获知识点。</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wenjin Luo</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+	  <div class="footer-inner">
+		<embed src="//music.163.com/style/swf/widget.swf?sid=38574492&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+	  </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
